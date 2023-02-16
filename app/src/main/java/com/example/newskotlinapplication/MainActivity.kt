@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        ApiManager.getApis().getSources(apiKey )
+        ApiManager.getApis().getSources(apiKey)
             .enqueue(object :Callback<SourcesResponse>{
                 override fun onResponse(
                     call: Call<SourcesResponse>,
