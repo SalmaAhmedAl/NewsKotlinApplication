@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_margin="8dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/image_news"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        app:riv_corner_radius_top_left="12dp"
+        app:riv_corner_radius_top_right="12dp"
+        android:scaleType="centerCrop"
+
+        tools:src="@tools:sample/avatars"/>
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#DA505457"
+        tools:text="This is author"
+        />
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textColor="@color/black"
+        tools:text="This is title"
+        />
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        tools:text="This is time"
+        />
+
+</LinearLayout>

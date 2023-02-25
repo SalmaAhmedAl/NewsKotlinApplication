@@ -2,7 +2,7 @@ package com.example.newskotlinapplication.api
 
 class ApiConstants {
     companion object{
-        val apiKey ="bb67de293274417ca19e18a19e64478c"
+        val apiKey ="2a42942cce2d4671b700e6818d0b40e3"
 
     }
 }

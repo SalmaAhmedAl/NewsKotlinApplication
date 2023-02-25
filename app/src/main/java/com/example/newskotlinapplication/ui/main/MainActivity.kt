@@ -2,16 +2,9 @@ package com.example.newskotlinapplication.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.example.newskotlinapplication.R
-import com.example.newskotlinapplication.api.ApiManager
-import com.example.newskotlinapplication.api.model.SourcesResponse
 import com.example.newskotlinapplication.databinding.ActivityMainBinding
-import com.example.newskotlinapplication.databinding.FragmentCategoryBinding
 import com.example.newskotlinapplication.ui.category.CategoryFragment
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     lateinit var viewBinding: ActivityMainBinding

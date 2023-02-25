@@ -1,8 +1,8 @@
-package com.example.newskotlinapplication.api.model
+package com.example.newskotlinapplication.api.model.sourceResponse
 
 import com.google.gson.annotations.SerializedName
 
- class Source(
+ class SourceItem(
 
 	@field:SerializedName("country")
 	val country: String? = null,

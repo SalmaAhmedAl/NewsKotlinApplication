@@ -1,11 +1,11 @@
-package com.example.newskotlinapplication.api.model
+package com.example.newskotlinapplication.api.model.sourceResponse
 
 import com.google.gson.annotations.SerializedName
 
  class SourcesResponse(
 
      @field:SerializedName("sources")
-	val sources: List<Source?>? = null,
+	val sources: List<SourceItem?>? = null,
 
      @field:SerializedName("status")
 	val status: String? = null,
@@ -13,6 +13,6 @@ import com.google.gson.annotations.SerializedName
     //error state
      @field:SerializedName("code")
      val code: String? = null,
-    @field:SerializedName("message")
+     @field:SerializedName("message")
      val message: String? = null
 )
