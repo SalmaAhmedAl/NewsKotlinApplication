@@ -13,16 +13,16 @@ class ApiManager {
        @Synchronized
        private fun getInstance():Retrofit{
             if(retrofit==null){
-                val loggingInterceptor= HttpLoggingInterceptor(
-                    HttpLoggingInterceptor.Logger {
-                        Log.e("apiTestForLearning", it)
-                    }
-                )
-                loggingInterceptor.level= HttpLoggingInterceptor.Level.BODY
-
-                val okHttpClient =OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
+//                val loggingInterceptor= HttpLoggingInterceptor(
+//                    HttpLoggingInterceptor.Logger {
+//                        Log.e("apiTestForLearning", it)
+//                    }
+//                )
+//                loggingInterceptor.level= HttpLoggingInterceptor.Level.BODY
+//
+//                val okHttpClient =OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
                 retrofit=Retrofit.Builder().baseUrl("https://newsapi.org")
-                    .client(okHttpClient)
+                   // .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
             }

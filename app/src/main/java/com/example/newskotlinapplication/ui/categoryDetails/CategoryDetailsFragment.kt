@@ -1,4 +1,4 @@
-package com.example.newskotlinapplication.ui.category
+package com.example.newskotlinapplication.ui.categoryDetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import com.example.newskotlinapplication.api.ApiConstants
 import com.example.newskotlinapplication.api.ApiManager
 import com.example.newskotlinapplication.api.model.sourceResponse.SourceItem
 import com.example.newskotlinapplication.api.model.sourceResponse.SourcesResponse
-import com.example.newskotlinapplication.databinding.FragmentCategoryBinding
+import com.example.newskotlinapplication.databinding.FragmentDetailsCategoryBinding
 import com.example.newskotlinapplication.ui.news.NewsFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -20,15 +20,15 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CategoryFragment :Fragment() {
-    lateinit var viewBinding : FragmentCategoryBinding
+class CategoryDetailsFragment :Fragment() {
+    lateinit var viewBinding : FragmentDetailsCategoryBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewBinding = FragmentCategoryBinding.inflate(inflater, container,false)
+        viewBinding = FragmentDetailsCategoryBinding.inflate(inflater, container,false)
         return viewBinding.root
     }
 
@@ -58,7 +58,7 @@ class CategoryFragment :Fragment() {
                 ) {
                   //  viewBinding.loddingIndector.isVisible=false
                     if(response.isSuccessful) {
-                        bindingSourcesInTaLayout(response.body()?.sources)
+                        bindingSourcesInTabLayout(response.body()?.sources)
                     }else{
                         //we need to create object Gson because error body return string(JSON file) and I need it to return
                         //SourceItem object>>> SoOo I'll use Gson
@@ -92,15 +92,15 @@ class CategoryFragment :Fragment() {
         }
     }
 
-    fun bindingSourcesInTaLayout(sourcesList: List<SourceItem?>?){
+    fun bindingSourcesInTabLayout(sourcesList: List<SourceItem?>?){
         sourcesList?.forEach { source->
-               val tab=    viewBinding.tabLayout.newTab()
+               val tab= viewBinding.tabLayout.newTab()
             tab.text= source?.name
             tab.tag= source
             viewBinding.tabLayout.addTab(tab)
 
         }
-        viewBinding.tabLayout.addOnTabSelectedListener(object :OnTabSelectedListener{
+        viewBinding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val source=  tab?.tag as SourceItem
                 changeNewsFragment(source)
