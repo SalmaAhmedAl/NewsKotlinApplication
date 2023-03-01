@@ -21,12 +21,12 @@ class CategoriesAdapter(val items :List<Category>):RecyclerView.Adapter<Categori
             image.setImageResource(item.imageId)
             title.text= item.title
             container.setCardBackgroundColor( ContextCompat.getColor(holder.itemView.context, item.backgroundColorID))
-            onItemClickListener?.let {
+            onItemClickListener?.let { clickListener->
+                root.setOnClickListener {
+                    clickListener.onItemClick(position, items[position])
+                }
+            }
 
-            }
-            root.setOnClickListener {
-                onItemClickListener?.onItemClick(position, items[position])
-            }
         }
     }
 
