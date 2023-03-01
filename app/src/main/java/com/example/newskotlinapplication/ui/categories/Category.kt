@@ -2,7 +2,7 @@ package com.example.newskotlinapplication.ui.categories
 
 import com.example.newskotlinapplication.R
 
-data class Category(val id:String , val name:String, val imageId: Int, val backgroundColorID:Int){
+data class Category(val idApi:String , val title:String, val imageId: Int, val backgroundColorID:Int){
     companion object{
        fun getCategoriesList():List<Category>{
 

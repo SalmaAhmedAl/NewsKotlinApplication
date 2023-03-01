@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.newskotlinapplication.R
 import com.example.newskotlinapplication.databinding.ActivityMainBinding
-import com.example.newskotlinapplication.ui.categoryDetails.CategoryDetailsFragment
+import com.example.newskotlinapplication.ui.categories.CategoriesFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var viewBinding: ActivityMainBinding
@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         viewBinding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
              supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container,CategoryDetailsFragment())
+            .replace(R.id.fragment_container,CategoriesFragment())
             .commit()
 //        ApiManager.getApis().getSources(apiKey)
 //            .enqueue(object :Callback<SourcesResponse>{
