@@ -12,6 +12,7 @@ import com.example.newskotlinapplication.api.ApiManager
 import com.example.newskotlinapplication.api.model.sourceResponse.SourceItem
 import com.example.newskotlinapplication.api.model.sourceResponse.SourcesResponse
 import com.example.newskotlinapplication.databinding.FragmentDetailsCategoryBinding
+import com.example.newskotlinapplication.ui.categories.Category
 import com.example.newskotlinapplication.ui.news.NewsFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -22,6 +23,15 @@ import retrofit2.Response
 
 class CategoryDetailsFragment :Fragment() {
     lateinit var viewBinding : FragmentDetailsCategoryBinding
+    lateinit var category: Category
+
+    companion object{
+        fun getInstance(categoryy: Category):CategoryDetailsFragment{
+            val fragment = CategoryDetailsFragment()
+             fragment.category=categoryy
+            return fragment
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,7 +60,7 @@ class CategoryDetailsFragment :Fragment() {
     }
     private fun loadNewsSources() {
         showLoadingLayout()
-        ApiManager.getApis().getSources(ApiConstants.apiKey)
+        ApiManager.getApis().getSources(ApiConstants.apiKey, category.idApi)
             .enqueue(object :Callback<SourcesResponse>{
                 override fun onResponse(
                     call: Call<SourcesResponse>,

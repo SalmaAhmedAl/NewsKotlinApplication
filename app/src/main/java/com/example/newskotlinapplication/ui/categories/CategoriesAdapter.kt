@@ -21,6 +21,8 @@ class CategoriesAdapter(val items :List<Category>):RecyclerView.Adapter<Categori
             image.setImageResource(item.imageId)
             title.text= item.title
             container.setCardBackgroundColor( ContextCompat.getColor(holder.itemView.context, item.backgroundColorID))
+
+            //We use let to set condition and do something with this condition ////apply
             onItemClickListener?.let { clickListener->
                 root.setOnClickListener {
                     clickListener.onItemClick(position, items[position])
@@ -31,7 +33,7 @@ class CategoriesAdapter(val items :List<Category>):RecyclerView.Adapter<Categori
     }
 
     override fun getItemCount(): Int= items.size
-     val onItemClickListener :OnItemClickListener? =null
+     var onItemClickListener :OnItemClickListener? =null
     interface OnItemClickListener{
         fun onItemClick(position: Int, item:Category)
     }
