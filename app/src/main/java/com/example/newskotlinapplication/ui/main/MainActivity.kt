@@ -2,6 +2,7 @@ package com.example.newskotlinapplication.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.ActionBarDrawerToggle
 import com.example.newskotlinapplication.R
 import com.example.newskotlinapplication.databinding.ActivityMainBinding
 import com.example.newskotlinapplication.ui.categories.CategoriesFragment
@@ -25,6 +26,17 @@ class MainActivity : AppCompatActivity(), CategoriesFragment.OnCategoryClickList
         super.onCreate(savedInstanceState)
         viewBinding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+        val toggle = ActionBarDrawerToggle(
+            this, viewBinding.root, viewBinding.toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+        viewBinding.root.addDrawerListener(toggle)
+        toggle.syncState()
+
+
+
+
         categoriesFragment.onCategoryClickListener=this
         supportFragmentManager.beginTransaction()
                  .replace(R.id.fragment_container,categoriesFragment)

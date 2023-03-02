@@ -2,4 +2,6 @@
     <string name="app_name">NewsKotlinApplication</string>
     <string name="try_again">Try again</string>
     <string name="pick_your_category_of_interest">Pick your category of interest</string>
+    <string name="navigation_drawer_close">close</string>
+    <string name="navigation_drawer_open">open</string>
 </resources>
