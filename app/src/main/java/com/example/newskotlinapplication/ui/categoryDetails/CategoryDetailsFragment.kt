@@ -7,24 +7,21 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.newskotlinapplication.R
-import com.example.newskotlinapplication.api.ApiConstants
-import com.example.newskotlinapplication.api.ApiManager
 import com.example.newskotlinapplication.api.model.sourceResponse.SourceItem
-import com.example.newskotlinapplication.api.model.sourceResponse.SourcesResponse
 import com.example.newskotlinapplication.databinding.FragmentDetailsCategoryBinding
 import com.example.newskotlinapplication.ui.categories.Category
 import com.example.newskotlinapplication.ui.news.NewsFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import com.google.gson.Gson
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+
 
 class CategoryDetailsFragment :Fragment() {
     lateinit var viewBinding : FragmentDetailsCategoryBinding
     lateinit var category: Category
+    lateinit var viewModel: CategoriesDetailsViewModel
 
     companion object{
         fun getInstance(categoryy: Category):CategoryDetailsFragment{
@@ -43,50 +40,52 @@ class CategoryDetailsFragment :Fragment() {
         return viewBinding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel =ViewModelProvider(this).get(CategoriesDetailsViewModel::class.java)
+
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadNewsSources()
-        childFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, NewsFragment())
+       // loadNewsSources()
+        viewModel.loadNewsSources(category.idApi)
+       subscribeToLiveData()
 
         viewBinding.tryAgain.setOnClickListener{
-            loadNewsSources()
+           // loadNewsSources()
+            viewModel.loadNewsSources(category.idApi)
+            subscribeToLiveData()
         }
     }
+
+    fun subscribeToLiveData(){
+        viewModel.sourcesLiveData.observe(viewLifecycleOwner, object :Observer<List<SourceItem?>?>{
+            override fun onChanged(t: List<SourceItem?>?) {
+                bindingSourcesInTabLayout(t)
+            } })
+        viewModel.showLoadingLayout.observe(viewLifecycleOwner, object :Observer<Boolean>{
+            override fun onChanged(show: Boolean?) {
+                if(show==true)
+                    showLoadingLayout()
+                else
+                    hideLoadingLayout()
+            } })
+        viewModel.showErrorLayout.observe(viewLifecycleOwner, object :Observer<String>{
+            override fun onChanged(t: String?) {
+                showErrorMessage(t)
+            }
+
+        })
+    }
     private fun changeNewsFragment(source: SourceItem){
-        loadNewsSources()
+        viewModel.loadNewsSources(category.idApi)
+        subscribeToLiveData()
+        //السطرين دول من عندي
         childFragmentManager.beginTransaction()
             .replace(R.id.fragment_container_n, NewsFragment.getInstance(source))
             .commit()
     }
-    private fun loadNewsSources() {
-        showLoadingLayout()
-        ApiManager.getApis().getSources(ApiConstants.apiKey, category.idApi)
-            .enqueue(object :Callback<SourcesResponse>{
-                override fun onResponse(
-                    call: Call<SourcesResponse>,
-                    response: Response<SourcesResponse>
-                ) {
-                  //  viewBinding.loddingIndector.isVisible=false
-                    if(response.isSuccessful) {
-                        bindingSourcesInTabLayout(response.body()?.sources)
-                    }else{
-                        //we need to create object Gson because error body return string(JSON file) and I need it to return
-                        //SourceItem object>>> SoOo I'll use Gson
-                        val gson = Gson()
-                        val errorResponse=  gson.fromJson(response.errorBody()?.string(), SourcesResponse::class.java)
-                        showErrorMessage(errorResponse.message)
 
-                    }
-                }
-
-                override fun onFailure(call: Call<SourcesResponse>, t: Throwable) {
-                  //  viewBinding.loddingIndector.isVisible=false
-                    showErrorMessage(t.localizedMessage)
-                }
-
-            })
-    }
 
     private fun showErrorMessage(message: String?) {
         with(viewBinding) {
@@ -102,6 +101,15 @@ class CategoryDetailsFragment :Fragment() {
             errorLayout.isVisible=false
         }
     }
+
+
+    private fun hideLoadingLayout() {
+        with(viewBinding) {
+            //loddingIndector.isVisible=true
+            errorLayout.isVisible=false
+        }
+    }
+
 
     fun bindingSourcesInTabLayout(sourcesList: List<SourceItem?>?){
         sourcesList?.forEach { source->
