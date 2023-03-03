@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.newskotlinapplication.R
@@ -108,6 +109,12 @@ class CategoryDetailsFragment :Fragment() {
             tab.text= source?.name
             tab.tag= source
             viewBinding.tabLayout.addTab(tab)
+
+            val layoutsPrams = LinearLayout.LayoutParams(tab.view.layoutParams)
+            layoutsPrams.marginStart=12
+            layoutsPrams.marginEnd=12
+
+           tab.view.layoutParams=layoutsPrams
 
         }
         viewBinding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener{

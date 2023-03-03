@@ -8,6 +8,7 @@ import com.example.newskotlinapplication.databinding.ActivityMainBinding
 import com.example.newskotlinapplication.ui.categories.CategoriesFragment
 import com.example.newskotlinapplication.ui.categories.Category
 import com.example.newskotlinapplication.ui.categoryDetails.CategoryDetailsFragment
+import com.example.newskotlinapplication.ui.settings.SettingsFragment
 
 class MainActivity : AppCompatActivity(), CategoriesFragment.OnCategoryClickListener {
     lateinit var viewBinding: ActivityMainBinding
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity(), CategoriesFragment.OnCategoryClickList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewBinding= ActivityMainBinding.inflate(layoutInflater)
+        viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
         val toggle = ActionBarDrawerToggle(
             this, viewBinding.root, viewBinding.toolbar,
@@ -34,14 +35,35 @@ class MainActivity : AppCompatActivity(), CategoriesFragment.OnCategoryClickList
         viewBinding.root.addDrawerListener(toggle)
         toggle.syncState()
 
+        viewBinding.navView.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.nav_categories -> {
+                    showCategoryFragment()
+                }
+                R.id.nav_settings -> {
+                    showSettingsFragment()
+                }
+            }
+            //viewBinding.root.closeDrawer()
+            return@setNavigationItemSelectedListener true
+        }
 
 
+        categoriesFragment.onCategoryClickListener = this
+        showCategoryFragment()
+    }
 
-        categoriesFragment.onCategoryClickListener=this
+    private fun showCategoryFragment() {
         supportFragmentManager.beginTransaction()
-                 .replace(R.id.fragment_container,categoriesFragment)
-                 .addToBackStack(null)
-                 .commit()
+            .replace(R.id.fragment_container,categoriesFragment)
+            .addToBackStack(null)
+            .commit()
+    }
 
+    private fun showSettingsFragment() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container,SettingsFragment())
+            .addToBackStack(null)
+            .commit()
     }
 }
