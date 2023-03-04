@@ -3,6 +3,7 @@ package com.example.newskotlinapplication.ui.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.databinding.DataBindingUtil
 import com.example.newskotlinapplication.R
 import com.example.newskotlinapplication.databinding.ActivityMainBinding
 import com.example.newskotlinapplication.ui.categories.CategoriesFragment
@@ -25,14 +26,14 @@ class MainActivity : AppCompatActivity(), CategoriesFragment.OnCategoryClickList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewBinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(viewBinding.root)
+        viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        //setContentView(viewBinding.root)
         val toggle = ActionBarDrawerToggle(
-            this, viewBinding.root, viewBinding.toolbar,
+            this, viewBinding.drawerMainActivity, viewBinding.toolbar,
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         )
-        viewBinding.root.addDrawerListener(toggle)
+         viewBinding.drawerMainActivity.addDrawerListener(toggle)
         toggle.syncState()
 
         viewBinding.navView.setNavigationItemSelectedListener {
