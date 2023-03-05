@@ -77,6 +77,7 @@ class CategoryDetailsFragment :Fragment() {
 
         })
     }
+
     private fun changeNewsFragment(source: SourceItem){
         viewModel.loadNewsSources(category.idApi)
         subscribeToLiveData()
@@ -117,12 +118,14 @@ class CategoryDetailsFragment :Fragment() {
             tab.text= source?.name
             tab.tag= source
             viewBinding.tabLayout.addTab(tab)
+            (tab.view.layoutParams as LinearLayout.LayoutParams).marginStart =12
+            (tab.view.layoutParams as LinearLayout.LayoutParams).marginEnd =12
 
-            val layoutsPrams = LinearLayout.LayoutParams(tab.view.layoutParams)
-            layoutsPrams.marginStart=12
-            layoutsPrams.marginEnd=12
-
-           tab.view.layoutParams=layoutsPrams
+//            val layoutsPrams = LinearLayout.LayoutParams(tab.view.layoutParams)
+//            layoutsPrams.marginStart=12
+//            layoutsPrams.marginEnd=12
+//
+//           tab.view.layoutParams=layoutsPrams
 
         }
         viewBinding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener{

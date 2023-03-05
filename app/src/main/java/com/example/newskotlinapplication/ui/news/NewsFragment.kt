@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.newskotlinapplication.api.model.newsResponse.NewsItem
 import com.example.newskotlinapplication.api.model.sourceResponse.SourceItem
 import com.example.newskotlinapplication.databinding.FragmentNewsBinding
@@ -21,6 +23,10 @@ class NewsFragment:Fragment() {
     lateinit var source : SourceItem
     lateinit var viewBinding : FragmentNewsBinding
     lateinit var viewModel: NewsViewModel
+
+    var PAGE_SIZE =20
+    var currentPage=1
+    var isLoaded= false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,9 +44,14 @@ class NewsFragment:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerNews()
-       // getNew()
-        viewModel.getNew(source.id?:"")
+        getNew()
+
         subscribeToLiveData()
+    }
+
+    private fun getNew() {
+        viewModel.getNew(source.id?:"", pageSize = PAGE_SIZE, page = currentPage)
+        isLoaded=false
     }
 
     fun subscribeToLiveData(){
@@ -69,6 +80,20 @@ class NewsFragment:Fragment() {
     val newsAdapter =NewsAdapter(null)
     private fun initRecyclerNews() {
     viewBinding.recyclerNews.adapter=newsAdapter
+        viewBinding.recyclerNews.addOnScrollListener(object :RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val lastVisibleItemPosition =layoutManager.findLastVisibleItemPosition()
+                val totalItemCount = layoutManager.itemCount
+                val visibleThreshold = 10
+                if(!isLoaded && totalItemCount - lastVisibleItemPosition <=visibleThreshold ){
+                    isLoaded =true
+                    currentPage++
+                    getNew()
+                }
+            }
+        })
     }
 
 

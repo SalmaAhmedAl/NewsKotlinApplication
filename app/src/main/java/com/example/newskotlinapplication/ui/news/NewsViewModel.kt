@@ -15,11 +15,11 @@ class NewsViewModel:ViewModel() {
     val showLoading =MutableLiveData<Boolean>()
     val showError =MutableLiveData<String>()
     val newsList = MutableLiveData<List<NewsItem?>?>()
-     fun getNew(sourceId:String) {
+     fun getNew(sourceId:String, pageSize:Int, page:Int) {
         //showLoadingLayout()
          showLoading.value=true
         ApiManager.getApis()
-            .getNews(ApiConstants.apiKey,sourceId)
+            .getNews(ApiConstants.apiKey,sourceId,pageSize=pageSize,page=page)
             .enqueue(object : Callback<NewsResponse> {
                 override fun onResponse(
                     call: Call<NewsResponse>,
