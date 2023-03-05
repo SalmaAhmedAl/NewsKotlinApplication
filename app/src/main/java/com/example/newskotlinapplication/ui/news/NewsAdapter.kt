@@ -7,6 +7,7 @@ import com.example.newskotlinapplication.api.model.newsResponse.NewsItem
 import com.example.newskotlinapplication.databinding.ItemNewsBinding
 
 class NewsAdapter (var items: List<NewsItem?>?):RecyclerView.Adapter<NewsAdapter.ViewHolder>()  {
+    var onNewsClick:OnNewsClick ?=null
     class ViewHolder (val viewBinding : ItemNewsBinding) :RecyclerView.ViewHolder(viewBinding.root){
        fun bind(news: NewsItem?){
            viewBinding.news=news
@@ -23,6 +24,11 @@ class NewsAdapter (var items: List<NewsItem?>?):RecyclerView.Adapter<NewsAdapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items?.get(position)
         holder.bind(item)
+        onNewsClick?.let {
+            holder.itemView.rootView.setOnClickListener {
+                onNewsClick?.onItemClick(item)
+            }
+        }
 
     }
 
@@ -33,5 +39,8 @@ class NewsAdapter (var items: List<NewsItem?>?):RecyclerView.Adapter<NewsAdapter
 
     }
 
+    interface OnNewsClick{
+        fun onItemClick(news: NewsItem?)
+    }
 
 }

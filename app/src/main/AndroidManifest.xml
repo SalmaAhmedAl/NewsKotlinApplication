@@ -15,6 +15,13 @@
         android:theme="@style/Theme.NewsKotlinApplication"
         tools:targetApi="31">
         <activity
+            android:name=".ui.news_details.NewsDetailsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.splash.SplashScreen"
             android:exported="true">
             <intent-filter>
@@ -30,7 +37,6 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="false">
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

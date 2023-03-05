@@ -1,5 +1,8 @@
 package com.example.newskotlinapplication
 
+import android.content.Intent
+import android.net.Uri
+import android.view.View
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -22,4 +25,14 @@ fun changeCardBackground(cardView: CardView, colorId:Int){
 @BindingAdapter("image")
 fun setImageWithId(imageView: ImageView, imageId:Int){
  imageView.setImageResource(imageId)
+}
+
+@BindingAdapter("launchUrl")
+fun launchUrl (view: View, url:String){
+    view.setOnClickListener{
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        view.context.startActivity(browserIntent)
+    }
+
+
 }

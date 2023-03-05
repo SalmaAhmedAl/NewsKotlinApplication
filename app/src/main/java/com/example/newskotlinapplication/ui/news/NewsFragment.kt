@@ -1,5 +1,6 @@
 package com.example.newskotlinapplication.ui.news
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.newskotlinapplication.api.model.newsResponse.NewsItem
 import com.example.newskotlinapplication.api.model.sourceResponse.SourceItem
 import com.example.newskotlinapplication.databinding.FragmentNewsBinding
+import com.example.newskotlinapplication.ui.news_details.NewsDetailsActivity
+
 class NewsFragment:Fragment() {
     companion object{
         fun getInstance(source: SourceItem):NewsFragment{
@@ -79,7 +82,7 @@ class NewsFragment:Fragment() {
 
     val newsAdapter =NewsAdapter(null)
     private fun initRecyclerNews() {
-    viewBinding.recyclerNews.adapter=newsAdapter
+        viewBinding.recyclerNews.adapter=newsAdapter
         viewBinding.recyclerNews.addOnScrollListener(object :RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -94,6 +97,14 @@ class NewsFragment:Fragment() {
                 }
             }
         })
+
+        newsAdapter.onNewsClick = object :NewsAdapter.OnNewsClick{
+            override fun onItemClick(news: NewsItem?) {
+                val intent = Intent(requireContext(), NewsDetailsActivity::class.java)
+                  intent.putExtra("news", news)
+                startActivity(intent)
+            }
+        }
     }
 
 
