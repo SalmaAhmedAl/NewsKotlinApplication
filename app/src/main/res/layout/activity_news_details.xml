@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="news"
+            type="com.example.newskotlinapplication.api.model.newsResponse.NewsItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.news_details.NewsDetailsActivity">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/image"
+            imageURL="@{news.urlToImage}"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/source"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@{news.source.name}"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image"
+            tools:text="@tools:sample/first_names" />
+
+        <TextView
+            android:id="@+id/new_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:text="@{news.title}"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/source"
+            tools:text="@tools:sample/full_names" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:maxLines="1"
+            android:text="@{news.publishedAt}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/new_title"
+            tools:text="@tools:sample/date/ddmmyy" />
+
+        <androidx.cardview.widget.CardView
+            launchUrl="@{news.url}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@color/white"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/date">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="@{news.description}"
+                    tools:text="sample/lorem/random ample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random sample/lorem/random " />
+
+            </ScrollView>
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:id="@+id/link"
+            launchUrl="@{news.url}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="30sp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View full articale"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_arrow_right" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
